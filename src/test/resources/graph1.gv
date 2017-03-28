@@ -1,0 +1,6 @@
+a -> b [label = "a/b"];
+a -> c [label = "a/c"];
+b -> a [label = "b/a"];
+b -> d [label = "b/d"];
+c -> a [label = "c/a"];
+d -> b [label = "d/b"];
