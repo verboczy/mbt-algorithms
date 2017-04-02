@@ -3,7 +3,8 @@ package bme.mit.graph;
 import java.util.ArrayList;
 import java.util.List;
 
-import bme.mit.helper.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Represents a node in a graph.
@@ -11,6 +12,8 @@ import bme.mit.helper.Logger;
  *
  */
 public class Node {
+	
+	Logger log = LoggerFactory.getLogger(Node.class);
 	
 	// the name of the node
 	private String name;
@@ -58,7 +61,7 @@ public class Node {
 	
 	// Prints the name of the node to the log file.
 	public void printMyself() {
-		Logger.getInstance().logMessage("Node.java: node: " + name);
+		log.info("node: " + name);
 	}
 	
 	// name

@@ -1,6 +1,7 @@
 package bme.mit.graph;
 
-import bme.mit.helper.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Represents an edge in the graph.
@@ -8,7 +9,8 @@ import bme.mit.helper.Logger;
  *
  */
 public class Edge {
-	
+	Logger log = LoggerFactory.getLogger(Edge.class);
+		
 	// the node, which the edge start from
 	private Node startNode;
 	
@@ -32,7 +34,7 @@ public class Edge {
 	
 	// Prints the name of the start node, end node and the label to the log file.
 	public void printMyself() {
-		Logger.getInstance().logMessage("Edge.java: edge - from: " + this.startNode.getName() + 
+		log.info("edge - from: " + this.startNode.getName() + 
 				", to: " + this.endNode.getName() + ", input: " + this.inputLabel + ", output: " + this.outputLabel);
 	}
 	

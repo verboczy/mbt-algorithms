@@ -5,6 +5,9 @@ import java.io.FileReader;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import bme.mit.graph.Edge;
 import bme.mit.graph.Graph;
 import bme.mit.graph.Node;
@@ -15,6 +18,8 @@ import bme.mit.graph.Node;
  *
  */
 public class Parser {
+	
+	Logger log = LoggerFactory.getLogger(Parser.class);
 	
 	private Set<String> nodes;
 	private Set<String> edges;
@@ -47,14 +52,13 @@ public class Parser {
 					edges.add(stringArray[0] + " " + stringArray[2] + " " + stringArray[3] + " " + stringArray[4]);
 				}
 				catch (IndexOutOfBoundsException e) {
-					Logger.getInstance().logMessage("Parser.java: IndexOutOfBoundsException - Could not add input or output to the edge: " 
-								+ stringArray[0] + " " + stringArray[2] );
+					log.error("could not add input or output to the edge: " + stringArray[0] + " " + stringArray[2], e);
 					edges.add(stringArray[0] + " " + stringArray[2]);
 				}
 			}			
 		
 		} catch (Exception e) {
-			Logger.getInstance().logError("Parser.java: Exception - problem with the input graph file");
+			log.error("problem with the input graph file", e);
 		}
 		
 		makeEdgeList(graph);		
@@ -91,7 +95,7 @@ public class Parser {
 				edge.setOutputLabel(sArray[3]);
 			}
 			catch (IndexOutOfBoundsException e) {
-				Logger.getInstance().logMessage("Parser.java: IndexOutOfBoundsException - This edge does not have label.");
+				log.error("this edge does not have label.");
 			}
 			
 			graph.addEdge(edge);

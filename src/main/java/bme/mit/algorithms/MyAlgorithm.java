@@ -1,9 +1,11 @@
 package bme.mit.algorithms;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import bme.mit.graph.Edge;
 import bme.mit.graph.Graph;
 import bme.mit.graph.Node;
-import bme.mit.helper.Logger;
 
 /**
  * It contains my algorithms for traversing a graph.
@@ -12,12 +14,14 @@ import bme.mit.helper.Logger;
  */
 public class MyAlgorithm extends Algorithm {
 	
+	Logger log = LoggerFactory.getLogger(MyAlgorithm.class);
+	
 	/**
 	 * Not implemented yet.
 	 */
 	@Override
 	public void traverse(Graph graph) {
-		Logger.getInstance().logError("MyAlgorithm.java: traverse(Graph graph) - unimplemented method.");
+		log.debug("traverse(Graph graph) - unimplemented method.");
 	}
 
 	/**
@@ -25,7 +29,7 @@ public class MyAlgorithm extends Algorithm {
 	 */
 	@Override
 	public void traverse(Graph graph, Node initial) {
-		Logger.getInstance().logError("MyAlgorithm.java: traverse(Graph graph, Node initial) - unimplemented method.");
+		log.debug("traverse(Graph graph, Node initial) - unimplemented method.");
 	}
 
 	/**
@@ -47,7 +51,7 @@ public class MyAlgorithm extends Algorithm {
 		}
 		
 		if (nodeSet.equals(graph.getNodes())) {
-			Logger.getInstance().logMessage("MyAlgorithm.java: All nodes have been visited.");
+			log.info("all nodes have been visited.");
 			super.reset(graph);
 		}
 		else {
@@ -72,7 +76,7 @@ public class MyAlgorithm extends Algorithm {
 		minVisited.printMyself();
 		
 		if (edgeSet.equals(graph.getEdges())) {
-			Logger.getInstance().logMessage("MyAlgorithm.java: All edges have been visited.");
+			log.info("all edges have been visited.");
 			super.reset(graph);
 		}
 		else {

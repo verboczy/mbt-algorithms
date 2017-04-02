@@ -2,10 +2,12 @@ package bme.mit.algorithms;
 
 import java.util.Random;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import bme.mit.graph.Edge;
 import bme.mit.graph.Graph;
 import bme.mit.graph.Node;
-import bme.mit.helper.Logger;
 
 /**
  * It contains algorithms that traverse the graph randomly.
@@ -13,15 +15,17 @@ import bme.mit.helper.Logger;
  *
  */
 public class RandomAlgorithm extends Algorithm {
+	
+	Logger log = LoggerFactory.getLogger(RandomAlgorithm.class);
 
 	@Override
 	public void traverse(Graph graph)  {
-		Logger.getInstance().logError("RandomAlgorithm.java: traverse(Graph graph) - unimplemented method.");
+		log.debug("traverse(Graph graph) - unimplemented method.");
 	}
 
 	@Override
 	public void traverse(Graph graph, Node initial) {
-		Logger.getInstance().logError("RandomAlgorithm.java: traverse(Graph graph, Node initial) - unimplemented method.");
+		log.debug("traverse(Graph graph, Node initial) - unimplemented method.");
 	}
 	
 	/**
@@ -40,7 +44,7 @@ public class RandomAlgorithm extends Algorithm {
 		
 		
 		if (nodeSet.equals(graph.getNodes())) {
-			Logger.getInstance().logMessage("RandomAlgoritm.java: All nodes have been visited.");
+			log.info("all nodes have been visited.");
 			super.reset(graph);
 		}
 		else {
@@ -62,7 +66,7 @@ public class RandomAlgorithm extends Algorithm {
 		edge.printMyself();
 		
 		if (edgeSet.equals(graph.getEdges())) {
-			Logger.getInstance().logMessage("RandomAlgorithm.java: All edges have been visited. (randomAlgo)");
+			log.info("all edges have been visited. (randomAlgo)");
 			super.reset(graph);
 		}
 		else {

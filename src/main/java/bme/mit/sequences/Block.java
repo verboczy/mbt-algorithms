@@ -3,11 +3,15 @@ package bme.mit.sequences;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import bme.mit.graph.Node;
-import bme.mit.helper.Logger;
 
 public class Block {
 
+	Logger log = LoggerFactory.getLogger(Block.class);
+	
 	private String blockName;
 	private Set<Node> states;
 	
@@ -30,12 +34,11 @@ public class Block {
 	
 	public void printMyself() {
 		
-				
-		System.out.println("Block (" + blockName + ") contains the following states: " );
-		Logger.getInstance().logMessage("[BLOCK-INFO]: block (" + blockName + ") contains the following states:");
+		
+		log.info("[BLOCK-INFO]: block (" + blockName + ") contains the following states:");
 		for (Node node : states) {
-			Logger.getInstance().logMessage(node.getName());			
+			log.info(node.getName());			
 		}
-		Logger.getInstance().logMessage("[BLOCK-INFO]: END");
+		log.info("[BLOCK-INFO]: END");
 	}
 }

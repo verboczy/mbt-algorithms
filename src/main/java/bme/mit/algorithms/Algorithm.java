@@ -7,10 +7,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import bme.mit.graph.Edge;
 import bme.mit.graph.Graph;
 import bme.mit.graph.Node;
-import bme.mit.helper.Logger;
 
 /**
  * Algorithm is an abstract class, which has various graph traversing algorithms.
@@ -20,6 +22,8 @@ import bme.mit.helper.Logger;
  *
  */
 public abstract class Algorithm {
+	
+	Logger log = LoggerFactory.getLogger("cica");
 	
 	// a set of nodes
 	protected Set<Node> nodeSet;
@@ -106,7 +110,7 @@ public abstract class Algorithm {
 	 * @param graph
 	 */
 	public void traverseNodes(Graph graph) {
-		Logger.getInstance().logError("Algorithm.java: traverse(Graph graph) - unimplemented method.");
+		log.debug("traverse(Graph graph) - unimplemented method.");
 	}	
 	
 	/**
@@ -114,7 +118,7 @@ public abstract class Algorithm {
 	 * @param graph
 	 */
 	public void traverseEdges(Graph graph) {
-		Logger.getInstance().logError("Algorithm.java: traverse(Graph graph) - unimplemented method.");
+		log.debug("traverse(Graph graph) - unimplemented method.");
 	}		
 	
 	/**
@@ -140,7 +144,7 @@ public abstract class Algorithm {
 	public void eulerizeGraph(Graph original) {
 		// If the graph has a sink or a source, than it cannot be eulerized.
 		if (original.getHasSink() || original.getHasSource()) {
-			Logger.getInstance().logMessage("Algorithm.java: The graph cannot be eulerized.");
+			log.debug("The graph cannot be eulerized.");
 			return;
 		}
 				
