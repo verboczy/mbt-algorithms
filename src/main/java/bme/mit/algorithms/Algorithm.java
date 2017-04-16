@@ -23,7 +23,7 @@ import bme.mit.graph.Node;
  */
 public abstract class Algorithm {
 	
-	Logger log = LoggerFactory.getLogger("cica");
+	Logger log = LoggerFactory.getLogger(Algorithm.class);
 	
 	// a set of nodes
 	protected Set<Node> nodeSet;

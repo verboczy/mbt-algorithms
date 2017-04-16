@@ -8,8 +8,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import bme.mit.algorithms.RandomAlgorithm;
 import bme.mit.graph.GraphLoader;
+import bme.mit.helper.TestHelper;
 
 @RunWith(Parameterized.class)
 public class SequenceParameterizedTest {
@@ -27,19 +31,25 @@ public class SequenceParameterizedTest {
 	private static GraphLoader graphLoader = new GraphLoader();
 	private static Sequence homingSequence = new HomingSequence();
 	private static Sequence syncSequence = new SynchronizingSequence();
-	private String homingExpected;
+	//private String homingExpected;
 	private String syncExpected;
 	private String fileName;
+	private TestHelper helper;
+	private Logger log = LoggerFactory.getLogger(RandomAlgorithm.class);
 		
 	public SequenceParameterizedTest(String expHoming, String expSync, String file) {
-		homingExpected = expHoming;
+		//homingExpected = expHoming;
 		syncExpected = expSync;
 		fileName = file;
+		helper = new TestHelper();
 	}
 		
 	@Test
 	public void testHoming() {
-		Assert.assertEquals(homingExpected, homingSequence.getSequence(graphLoader.loadGraph(fileName)));
+		String seq = homingSequence.getSequence(graphLoader.loadGraph(fileName));
+		log.info(seq);
+		Assert.assertEquals(true, helper.checkHomingSequence(graphLoader.loadGraph(fileName), seq));
+		//Assert.assertEquals(homingExpected, homingSequence.getSequence(graphLoader.loadGraph(fileName)));
 	}
 	
 	@Test
