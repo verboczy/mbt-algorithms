@@ -17,31 +17,29 @@ import bme.mit.helper.TestHelper;
 
 @RunWith(Parameterized.class)
 public class SequenceParameterizedTest {
-		
-	@Parameters(name = "{2}")
-	public static List<Object[]> data() {
-		return Arrays.asList(new Object[][] {
-			{"ba", "", "gThreeNodesSixEdges.gv"},
-			{"b", "", "gFourNodesEightEdges.gv"},
-			{"ca", "", "gFourNodesEightEdgesABC.gv"},
-			{"cd", "", "gFourNodesEightEdgesABCD.gv"},
-		});
-	}	
 	
 	private static GraphLoader graphLoader = new GraphLoader();
 	private static Sequence homingSequence = new HomingSequence();
 	private static Sequence syncSequence = new SynchronizingSequence();
-	//private String homingExpected;
 	private String syncExpected;
 	private String fileName;
 	private TestHelper helper;
 	private Logger log = LoggerFactory.getLogger(RandomAlgorithm.class);
-		
-	public SequenceParameterizedTest(String expHoming, String expSync, String file) {
-		//homingExpected = expHoming;
+	
+	public SequenceParameterizedTest(String expSync, String file) {
 		syncExpected = expSync;
 		fileName = file;
 		helper = new TestHelper();
+	}
+		
+	@Parameters(name = "{2}")
+	public static List<Object[]> data() {
+		return Arrays.asList(new Object[][] {
+			{"", "gThreeNodesSixEdges.gv"},
+			{"", "gFourNodesEightEdges.gv"},
+			{"", "gFourNodesEightEdgesABC.gv"},
+			{"", "gFourNodesEightEdgesABCD.gv"},
+		});
 	}
 		
 	@Test
@@ -49,7 +47,6 @@ public class SequenceParameterizedTest {
 		String seq = homingSequence.getSequence(graphLoader.loadGraph(fileName));
 		log.info(seq);
 		Assert.assertEquals(true, helper.checkHomingSequence(graphLoader.loadGraph(fileName), seq));
-		//Assert.assertEquals(homingExpected, homingSequence.getSequence(graphLoader.loadGraph(fileName)));
 	}
 	
 	@Test

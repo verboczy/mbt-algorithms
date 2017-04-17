@@ -84,7 +84,7 @@ public class HomingSequence extends Sequence {
 				if (sEdge.getInputLabel().equals(tEdge.getInputLabel())) {
 					y.append(sEdge.getInputLabel());
 					String yRec = findSeparatingSequence(sEdge.getEndNode(), tEdge.getEndNode(), bound - 1);
-					if (!yRec.equals("")) {
+					if (!"".equals(yRec)) {
 						y.append(yRec);
 						return y.toString();
 					}

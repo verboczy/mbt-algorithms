@@ -24,14 +24,12 @@ public class GraphLoader {
 	private static String getFileName(String graphFileName) {
 		// the folder of the workspace
 		String userDir = System.getProperty("user.dir");
-		// userDir = E:\Work\workspaces\java\graphalgorithms
-		//System.out.println(userDir);
 		// the graphs are in the resources folder
 		String resourcesFolder = "\\src\\test\\resources\\";
 		userDir = userDir.concat(resourcesFolder);
 		
-		// the name of the file containing the graph
-		//String graphFileName = "gstateun.gv";			// The graph can be selected here!
+		// the name of the file containing the graph, eg: examplegraph.gv
+		// The graph can be selected here!
 		userDir = userDir.concat(graphFileName);
 
 		return userDir;
