@@ -1,5 +1,5 @@
 projectKey=hu.bme.mit.mbt
 serverUrl=http://localhost:9000
 dashboardUrl=http://localhost:9000/dashboard/index/hu.bme.mit.mbt
-ceTaskId=AVt9q8SJtJNV_bV99BxE
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AVt9q8SJtJNV_bV99BxE
+ceTaskId=AVuF8IZuJkhAhNKTc0tP
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AVuF8IZuJkhAhNKTc0tP

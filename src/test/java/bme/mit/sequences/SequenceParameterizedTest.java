@@ -17,6 +17,7 @@ import bme.mit.helper.TestHelper;
 
 @RunWith(Parameterized.class)
 public class SequenceParameterizedTest {
+
 	
 	private static GraphLoader graphLoader = new GraphLoader();
 	private static Sequence homingSequence = new HomingSequence();
@@ -32,7 +33,7 @@ public class SequenceParameterizedTest {
 		helper = new TestHelper();
 	}
 		
-	@Parameters(name = "{2}")
+	@Parameters(name = "{1}")
 	public static List<Object[]> data() {
 		return Arrays.asList(new Object[][] {
 			{"", "gThreeNodesSixEdges.gv"},

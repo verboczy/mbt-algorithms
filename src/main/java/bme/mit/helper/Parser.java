@@ -95,7 +95,7 @@ public class Parser {
 				edge.setOutputLabel(sArray[3]);
 			}
 			catch (IndexOutOfBoundsException e) {
-				log.error("this edge does not have label.");
+				log.error("this edge does not have label.", e);
 			}
 			
 			graph.addEdge(edge);
