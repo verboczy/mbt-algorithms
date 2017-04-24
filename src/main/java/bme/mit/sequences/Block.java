@@ -35,7 +35,7 @@ public class Block {
 	public void printMyself() {
 		
 		
-		log.info("[BLOCK-INFO]: block (" + blockName + ") contains the following states:");
+		log.info("[BLOCK-INFO]: block ( %s ) contains the following states:", blockName);
 		for (Node node : states) {
 			log.info(node.getName());			
 		}

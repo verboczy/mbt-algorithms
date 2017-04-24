@@ -14,24 +14,8 @@ import bme.mit.graph.Node;
  */
 public class MyAlgorithm extends Algorithm {
 	
-	Logger log = LoggerFactory.getLogger(MyAlgorithm.class);
-	
-	/**
-	 * Not implemented yet.
-	 */
-	@Override
-	public void traverse(Graph graph) {
-		log.debug("traverse(Graph graph) - unimplemented method.");
-	}
-
-	/**
-	 * Not implemented yet.
-	 */
-	@Override
-	public void traverse(Graph graph, Node initial) {
-		log.debug("traverse(Graph graph, Node initial) - unimplemented method.");
-	}
-
+	Logger logger = LoggerFactory.getLogger(MyAlgorithm.class);
+		
 	/**
 	 * Visits all nodes from the initial node.
 	 */
@@ -51,7 +35,7 @@ public class MyAlgorithm extends Algorithm {
 		}
 		
 		if (nodeSet.equals(graph.getNodes())) {
-			log.info("all nodes have been visited.");
+			logger.info("all nodes have been visited.");
 			super.reset(graph);
 		}
 		else {
@@ -76,7 +60,7 @@ public class MyAlgorithm extends Algorithm {
 		minVisited.printMyself();
 		
 		if (edgeSet.equals(graph.getEdges())) {
-			log.info("all edges have been visited.");
+			logger.info("all edges have been visited.");
 			super.reset(graph);
 		}
 		else {

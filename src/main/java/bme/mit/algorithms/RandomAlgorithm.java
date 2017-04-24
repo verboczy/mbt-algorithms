@@ -16,17 +16,7 @@ import bme.mit.graph.Node;
  */
 public class RandomAlgorithm extends Algorithm {
 	
-	Logger log = LoggerFactory.getLogger(RandomAlgorithm.class);
-
-	@Override
-	public void traverse(Graph graph)  {
-		log.debug("traverse(Graph graph) - unimplemented method.");
-	}
-
-	@Override
-	public void traverse(Graph graph, Node initial) {
-		log.debug("traverse(Graph graph, Node initial) - unimplemented method.");
-	}
+	Logger logger = LoggerFactory.getLogger(RandomAlgorithm.class);
 	
 	/**
 	 * Visits the nodes from an initial node, but randomly.
@@ -44,7 +34,7 @@ public class RandomAlgorithm extends Algorithm {
 		
 		
 		if (nodeSet.equals(graph.getNodes())) {
-			log.info("all nodes have been visited.");
+			logger.info("all nodes have been visited.");
 			super.reset(graph);
 		}
 		else {
@@ -66,7 +56,7 @@ public class RandomAlgorithm extends Algorithm {
 		edge.printMyself();
 		
 		if (edgeSet.equals(graph.getEdges())) {
-			log.info("all edges have been visited. (randomAlgo)");
+			logger.info("all edges have been visited. (randomAlgo)");
 			super.reset(graph);
 		}
 		else {

@@ -61,7 +61,7 @@ public class Node {
 	
 	// Prints the name of the node to the log file.
 	public void printMyself() {
-		log.info("node: " + name);
+		log.info("node: %s", name);
 	}
 	
 	// name

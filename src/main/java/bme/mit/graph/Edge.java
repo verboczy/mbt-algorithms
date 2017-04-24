@@ -34,8 +34,8 @@ public class Edge {
 	
 	// Prints the name of the start node, end node and the label to the log file.
 	public void printMyself() {
-		log.info("edge - from: " + this.startNode.getName() + 
-				", to: " + this.endNode.getName() + ", input: " + this.inputLabel + ", output: " + this.outputLabel);
+		log.info("edge - from: %s , to: %s, input: %s, output: %s",
+				this.startNode.getName(), this.endNode.getName(), this.inputLabel, this.outputLabel);
 	}
 	
 	// startNode

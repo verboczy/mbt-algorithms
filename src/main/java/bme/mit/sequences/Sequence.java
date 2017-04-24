@@ -2,8 +2,8 @@ package bme.mit.sequences;
 
 import bme.mit.graph.Graph;
 
-public abstract class Sequence {
+public interface Sequence {
 
-	public abstract String getSequence(Graph graph);
+	public String getSequence(Graph graph);
 	
 }

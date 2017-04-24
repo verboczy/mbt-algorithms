@@ -44,8 +44,6 @@ public abstract class Algorithm {
 	}
 	
 	// the algorithms that should be overridden
-	public abstract void traverse(Graph graph);	
-	public abstract void traverse(Graph graph, Node initial);
 	public abstract void traverseNodes(Graph graph, Node initial);
 	public abstract void traverseEdges(Graph graph, Node initial);
 	
@@ -87,7 +85,7 @@ public abstract class Algorithm {
 	 * @param current - a node where we are standing
 	 */
 	private void eul(Graph graph, Node current) {
-		if (current.getEdges().size() <= 0) {			
+		if (current.getEdges().isEmpty()) {			
 			if (stack.isEmpty()) {	// think again the last step
 				return;
 			}
@@ -103,23 +101,7 @@ public abstract class Algorithm {
 			graph.getEdges().remove(removeEdge);
 			eul(graph, newCurrent);
 		}
-	}
-		
-	/**
-	 * Unimplemented yet.
-	 * @param graph
-	 */
-	public void traverseNodes(Graph graph) {
-		log.debug("traverse(Graph graph) - unimplemented method.");
 	}	
-	
-	/**
-	 * Unimplemented yet.
-	 * @param graph
-	 */
-	public void traverseEdges(Graph graph) {
-		log.debug("traverse(Graph graph) - unimplemented method.");
-	}		
 	
 	/**
 	 * Sets the nodes and edges to unvisited.
@@ -173,17 +155,14 @@ public abstract class Algorithm {
 		duplicatedEdge.setInputLabel(oldEdge.getInputLabel());
 		
 		for (Edge edge : positive.getEdges()) {
-			if (min.getPolarity() > edge.getEndNode().getPolarity()) {				
+			if ((min.getPolarity() > edge.getEndNode().getPolarity()) 
+				|| 
+				// In case the two polarity equals, let's go the way where there are more possibilities.
+				((min.getPolarity() == edge.getEndNode().getPolarity()) 
+						&& (edge.getEndNode().getEdges().size() > min.getEdges().size()))) {				
 				min = edge.getEndNode();
 				duplicatedEdge.setEndNode(min);
 				duplicatedEdge.setInputLabel(edge.getInputLabel());
-			}
-			// In case the two polarity equals, let's go the way where there are more possibilities.
-			else if ((min.getPolarity() == edge.getEndNode().getPolarity()) && 
-				(edge.getEndNode().getEdges().size() > min.getEdges().size())) {
-					min = edge.getEndNode();
-					duplicatedEdge.setEndNode(min);
-					duplicatedEdge.setInputLabel(edge.getInputLabel());
 			}
 		}
 		
@@ -191,6 +170,7 @@ public abstract class Algorithm {
 		
 		eulerizeGraph(original);	// recursive call
 	}
+	
 	
 	/**
 	 * Makes the edge graph of the original graph.

@@ -4,10 +4,11 @@ import bme.mit.graph.Edge;
 import bme.mit.graph.Graph;
 import bme.mit.graph.Node;
 
-public class HomingSequence extends Sequence {
+public class HomingSequence implements Sequence {
 
 	private int boundary;
 
+	@Override
 	public String getSequence(Graph graph) {
 
 		boundary = graph.getEdges().size();
