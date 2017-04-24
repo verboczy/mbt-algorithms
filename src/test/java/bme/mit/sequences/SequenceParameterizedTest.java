@@ -36,10 +36,16 @@ public class SequenceParameterizedTest {
 	@Parameters(name = "{1}")
 	public static List<Object[]> data() {
 		return Arrays.asList(new Object[][] {
-			{"", "gThreeNodesSixEdges.gv"},
-			{"", "gFourNodesEightEdges.gv"},
-			{"", "gFourNodesEightEdgesABC.gv"},
-			{"", "gFourNodesEightEdgesABCD.gv"},
+			{"", "circleFourEdges.gv"},
+			{"", "circleFourEdgesWithLoopsWithSameInput.gv"},
+			{"", "circleFourEdgesWithLoopsWithDiffInput.gv"},
+			{"", "circleTwoEdges.gv"},
+			{"", "circleTwoEdgesWithLoops.gv"},
+			{"", "homingExample.gv"},
+			//{"", "pathOneEdge.gv"},
+			{"", "pathOneEdgeWithLoop.gv"},
+			{"", "singletonNode.gv"},
+			{"", "singletonNodeWithLoop.gv"}
 		});
 	}
 		
