@@ -14,14 +14,60 @@ import bme.mit.graph.Node;
  */
 public class MyAlgorithm extends Algorithm {
 	
-	Logger logger = LoggerFactory.getLogger(MyAlgorithm.class);
+	private Logger logger = LoggerFactory.getLogger(MyAlgorithm.class);
+	
+	private StringBuilder pathBuilder;
+	
 		
+	@Override
+	public String getAllNodeVisited(Graph graph) {
+		pathBuilder = new StringBuilder("");
+		
+		Node initNode = getRandomNode(graph);
+		
+		traverseNodes(graph, initNode);
+		
+		return pathBuilder.toString();
+	}
+
+	@Override
+	public String getAllEdgeVisited(Graph graph) {
+		pathBuilder = new StringBuilder("");
+		
+		Node initNode = getRandomNode(graph);
+		
+		traverseEdges(graph, initNode);
+		
+		return pathBuilder.toString();
+	}
+
+	@Override
+	public String getAllNodeVisitedFromGivenNode(Graph graph, String init) {
+		pathBuilder = new StringBuilder("");
+		
+		Node initial = getNodeByName(graph, init);
+		traverseNodes(graph, initial);
+		
+		return pathBuilder.toString();
+	}
+
+	@Override
+	public String getAllEdgeVisitedFromGivenNode(Graph graph, String init) {
+		pathBuilder = new StringBuilder("");
+		
+		Node initial = getNodeByName(graph, init);
+		traverseEdges(graph, initial);
+		
+		return pathBuilder.toString();
+	}		
+	
 	/**
 	 * Visits all nodes from the initial node.
 	 */
-	@Override
 	public void traverseNodes(Graph graph, Node node) {
-		node.printMyself();		
+		//node.printMyself();		
+		pathBuilder.append(node.getName());
+		pathBuilder.append(";");
 		node.setVisitedCount(node.getVisitedCount() + 1);
 		nodeSet.add(node);
 		
@@ -35,7 +81,7 @@ public class MyAlgorithm extends Algorithm {
 		}
 		
 		if (nodeSet.equals(graph.getNodes())) {
-			logger.info("all nodes have been visited.");
+			//logger.info("all nodes have been visited.");
 			super.reset(graph);
 		}
 		else {
@@ -46,7 +92,6 @@ public class MyAlgorithm extends Algorithm {
 	/**
 	 * Visits all edges from an initial node.
 	 */
-	@Override
 	public void traverseEdges(Graph graph, Node initial) {
 		Edge minVisited = initial.getEdges().get(0);
 		for (Edge edge : initial.getEdges()) {
@@ -57,10 +102,12 @@ public class MyAlgorithm extends Algorithm {
 		
 		minVisited.setVisitedCount(minVisited.getVisitedCount() + 1);
 		edgeSet.add(minVisited);
-		minVisited.printMyself();
+		//minVisited.printMyself();
+		pathBuilder.append(minVisited.getInputLabel());
+		pathBuilder.append(";");
 		
 		if (edgeSet.equals(graph.getEdges())) {
-			logger.info("all edges have been visited.");
+			//logger.info("all edges have been visited.");
 			super.reset(graph);
 		}
 		else {

@@ -4,7 +4,9 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -23,7 +25,8 @@ import bme.mit.graph.Node;
  */
 public abstract class Algorithm {
 	
-	Logger log = LoggerFactory.getLogger(Algorithm.class);
+	private Logger log = LoggerFactory.getLogger(Algorithm.class);
+	private Random rand;
 	
 	// a set of nodes
 	protected Set<Node> nodeSet;
@@ -44,8 +47,46 @@ public abstract class Algorithm {
 	}
 	
 	// the algorithms that should be overridden
-	public abstract void traverseNodes(Graph graph, Node initial);
-	public abstract void traverseEdges(Graph graph, Node initial);
+	public abstract String getAllNodeVisited(Graph graph);
+	public abstract String getAllEdgeVisited(Graph graph);
+	public abstract String getAllNodeVisitedFromGivenNode(Graph graph, String initial);
+	public abstract String getAllEdgeVisitedFromGivenNode(Graph graph, String initial);
+	
+	//public abstract void traverseNodes(Graph graph, Node initial);
+	//public abstract void traverseEdges(Graph graph, Node initial);
+	
+	protected Node getRandomNode(Graph graph) {
+		rand = new Random();
+		
+		int graphSize = graph.getNodes().size();
+		int i = rand.nextInt(graphSize) + 1;
+		
+		int count = 0;
+		Node node = null;		
+		Iterator<Node> iter = graph.getNodes().iterator();	
+		
+		while (iter.hasNext() && count < i) {
+			node = iter.next();
+			count++;
+		}
+		
+		return node;
+	}
+	
+	protected Node getNodeByName(Graph graph, String name) {
+		
+		Iterator<Node> iter = graph.getNodes().iterator();
+		Node node = null;
+		
+		while (iter.hasNext()) {
+			node = iter.next();
+			if (name.equals(node.getName())) {
+				return node;
+			}
+		}
+		
+		return node;
+	}
 	
 	/**
 	 * Reverses the "circle" list.
@@ -64,7 +105,7 @@ public abstract class Algorithm {
 	 * @param graph - the graph we want to visit
 	 * @param initNode - the node, the Euler circle starts from
 	 */
-	public void eulerCircle(Graph graph, Node initNode) {
+	public String eulerCircle(Graph graph, Node initNode) {
 		stack.clear();
 		circle.clear();
 				
@@ -73,9 +114,11 @@ public abstract class Algorithm {
 		reverseCircleList();		
 		circle.add(0, initNode);
 		
+		StringBuilder eulerCircle = new StringBuilder("");
 		for (Node node : circle) {
-			node.printMyself();
-		}				
+			eulerCircle.append(node.getName());
+		}
+		return eulerCircle.toString();		
 	}
 	
 	/**

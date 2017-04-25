@@ -1,9 +1,11 @@
 package bme.mit.helper;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import bme.mit.graph.Edge;
 import bme.mit.graph.Graph;
 import bme.mit.graph.Node;
 
@@ -50,6 +52,71 @@ public class TestHelper {
 		}
 		
 		return true;
+	}
+	
+	private Node getNodeByName(Graph graph, String name) {
+		
+		Iterator<Node> iter = graph.getNodes().iterator();
+		Node node = null;
+		
+		while (iter.hasNext()) {
+			node = iter.next();
+			if (name.equals(node.getName())) {
+				return node;
+			}
+		}
+		
+		return node;
+	}
+	
+	// It is a valid path if all node is visited and all two consecutive nodes have an edge between themselves.
+	public boolean checkNodePath(Graph graph, String path) {
+		
+		String[] elements = path.split(";");
+		List<Node> nodeList = new ArrayList<>();
+		
+		// making a list of nodes from the array of node names
+		for (int i = 0; i < elements.length; i++) {
+			nodeList.add(getNodeByName(graph, elements[i]));
+		}
+		
+		// checking the edges and increment the visited count
+		int size = nodeList.size();
+		for (int i = 0; i < size - 1; i++) {
+			Node node = nodeList.get(i);
+			int vc = node.getVisitedCount();
+			node.setVisitedCount(++vc);
+			
+			
+			Node nextNode = nodeList.get(i + 1);
+			List<Edge> edges = node.getEdges();
+			int index = 0;
+			while (index < edges.size() && !nextNode.equals(edges.get(index).getEndNode())) {
+				index++;
+			}
+			if (index >= edges.size()) {
+				return false;
+			}
+		}
+		int vc = nodeList.get(size - 1).getVisitedCount();
+		nodeList.get(size - 1).setVisitedCount(++vc);
+		
+		// checking the visited count
+		Set<Node> nodeSet = graph.getNodes();
+		Iterator<Node> iter = nodeSet.iterator();
+		while (iter.hasNext()) {
+			Node node = iter.next();
+			if (node.getVisitedCount() < 1) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	public boolean checkEdgePath() {
+		
+		return false;
 	}
 
 }

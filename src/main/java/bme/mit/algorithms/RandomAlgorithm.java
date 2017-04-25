@@ -16,15 +16,60 @@ import bme.mit.graph.Node;
  */
 public class RandomAlgorithm extends Algorithm {
 	
-	Logger logger = LoggerFactory.getLogger(RandomAlgorithm.class);
+	private Logger logger = LoggerFactory.getLogger(RandomAlgorithm.class);
+	
+	private StringBuilder pathBuilder;
+	
+	@Override
+	public String getAllNodeVisited(Graph graph) {
+		pathBuilder = new StringBuilder("");
+		
+		Node initNode = getRandomNode(graph);
+		
+		traverseNodes(graph, initNode);
+		
+		return pathBuilder.toString();
+	}
+
+	@Override
+	public String getAllEdgeVisited(Graph graph) {
+		pathBuilder = new StringBuilder("");
+		
+		Node initNode = getRandomNode(graph);
+		
+		traverseEdges(graph, initNode);
+		
+		return pathBuilder.toString();
+	}
+
+	@Override
+	public String getAllNodeVisitedFromGivenNode(Graph graph, String init) {
+		pathBuilder = new StringBuilder("");
+		
+		Node initial = getNodeByName(graph, init);
+		traverseNodes(graph, initial);
+		
+		return pathBuilder.toString();
+	}
+
+	@Override
+	public String getAllEdgeVisitedFromGivenNode(Graph graph, String init) {
+		pathBuilder = new StringBuilder("");
+		
+		Node initial = getNodeByName(graph, init);
+		traverseEdges(graph, initial);
+		
+		return pathBuilder.toString();
+	}
 	
 	/**
 	 * Visits the nodes from an initial node, but randomly.
 	 */
-	@Override
 	public void traverseNodes(Graph graph, Node initial) {
 		
-		initial.printMyself();
+		//initial.printMyself();
+		pathBuilder.append(initial.getName());
+		pathBuilder.append(";");
 		initial.setVisitedCount(initial.getVisitedCount() + 1);
 		nodeSet.add(initial);
 		
@@ -34,7 +79,7 @@ public class RandomAlgorithm extends Algorithm {
 		
 		
 		if (nodeSet.equals(graph.getNodes())) {
-			logger.info("all nodes have been visited.");
+			//logger.info("all nodes have been visited.");
 			super.reset(graph);
 		}
 		else {
@@ -45,7 +90,6 @@ public class RandomAlgorithm extends Algorithm {
 	/**
 	 * Visits the edges from an initial node, but randomly.
 	 */
-	@Override
 	public void traverseEdges(Graph graph, Node initial) {
 		
 		Random rnd = new Random();
@@ -53,10 +97,12 @@ public class RandomAlgorithm extends Algorithm {
 		
 		Edge edge = initial.getEdges().get(index);
 		edgeSet.add(edge);
-		edge.printMyself();
+		//edge.printMyself();
+		pathBuilder.append(edge.getInputLabel());
+		pathBuilder.append(";");
 		
 		if (edgeSet.equals(graph.getEdges())) {
-			logger.info("all edges have been visited. (randomAlgo)");
+			//logger.info("all edges have been visited. (randomAlgo)");
 			super.reset(graph);
 		}
 		else {

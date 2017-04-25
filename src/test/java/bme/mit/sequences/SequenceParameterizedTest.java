@@ -11,7 +11,6 @@ import org.junit.runners.Parameterized.Parameters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import bme.mit.algorithms.RandomAlgorithm;
 import bme.mit.graph.GraphLoader;
 import bme.mit.helper.TestHelper;
 
@@ -25,7 +24,7 @@ public class SequenceParameterizedTest {
 	private String syncExpected;
 	private String fileName;
 	private TestHelper helper;
-	private Logger log = LoggerFactory.getLogger(RandomAlgorithm.class);
+	private Logger log = LoggerFactory.getLogger(SequenceParameterizedTest.class);
 	
 	public SequenceParameterizedTest(String expSync, String file) {
 		syncExpected = expSync;
