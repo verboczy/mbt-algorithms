@@ -13,7 +13,7 @@ import bme.mit.graph.Node;
  *
  */
 public class MyAlgorithm extends Algorithm {
-	
+		
 	private Logger logger = LoggerFactory.getLogger(MyAlgorithm.class);
 	
 	private StringBuilder pathBuilder;
@@ -24,6 +24,7 @@ public class MyAlgorithm extends Algorithm {
 		pathBuilder = new StringBuilder("");
 		
 		Node initNode = getRandomNode(graph);
+		stepCount = 0;
 		
 		traverseNodes(graph, initNode);
 		
@@ -35,6 +36,10 @@ public class MyAlgorithm extends Algorithm {
 		pathBuilder = new StringBuilder("");
 		
 		Node initNode = getRandomNode(graph);
+		pathBuilder.append(initNode.getName());
+		pathBuilder.append(";");
+		
+		stepCount = 0;
 		
 		traverseEdges(graph, initNode);
 		
@@ -46,6 +51,7 @@ public class MyAlgorithm extends Algorithm {
 		pathBuilder = new StringBuilder("");
 		
 		Node initial = getNodeByName(graph, init);
+		stepCount = 0;
 		traverseNodes(graph, initial);
 		
 		return pathBuilder.toString();
@@ -54,8 +60,11 @@ public class MyAlgorithm extends Algorithm {
 	@Override
 	public String getAllEdgeVisitedFromGivenNode(Graph graph, String init) {
 		pathBuilder = new StringBuilder("");
+		pathBuilder.append(init);
+		pathBuilder.append(";");
 		
-		Node initial = getNodeByName(graph, init);
+		Node initial = getNodeByName(graph, init);		
+		stepCount = 0;
 		traverseEdges(graph, initial);
 		
 		return pathBuilder.toString();
@@ -64,13 +73,19 @@ public class MyAlgorithm extends Algorithm {
 	/**
 	 * Visits all nodes from the initial node.
 	 */
-	public void traverseNodes(Graph graph, Node node) {
+	public void traverseNodes(Graph graph, Node node) {		
+		if (stepCount >= TIMEOUT) {
+			return;
+		}
 		//node.printMyself();		
 		pathBuilder.append(node.getName());
 		pathBuilder.append(";");
 		node.setVisitedCount(node.getVisitedCount() + 1);
 		nodeSet.add(node);
 		
+		if (node.getEdges().size() == 0) {
+			return;
+		}
 		Edge activeEdge = node.getEdges().get(0);
 		Node minVisited = activeEdge.getEndNode();		
 		for (Edge edge : node.getEdges()) {
@@ -85,6 +100,7 @@ public class MyAlgorithm extends Algorithm {
 			super.reset(graph);
 		}
 		else {
+			stepCount++;
 			traverseNodes(graph, minVisited);
 		}
 	}	
@@ -93,6 +109,9 @@ public class MyAlgorithm extends Algorithm {
 	 * Visits all edges from an initial node.
 	 */
 	public void traverseEdges(Graph graph, Node initial) {
+		if (initial.getEdges().size() == 0 || stepCount >= TIMEOUT) {
+			return;
+		}
 		Edge minVisited = initial.getEdges().get(0);
 		for (Edge edge : initial.getEdges()) {
 			if (edge.getVisitedCount() < minVisited.getVisitedCount()) {
@@ -111,6 +130,7 @@ public class MyAlgorithm extends Algorithm {
 			super.reset(graph);
 		}
 		else {
+			stepCount++;
 			traverseEdges(graph, minVisited.getEndNode());
 		}		
 	}

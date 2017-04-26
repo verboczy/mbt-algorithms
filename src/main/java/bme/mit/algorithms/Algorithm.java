@@ -28,6 +28,9 @@ public abstract class Algorithm {
 	private Logger log = LoggerFactory.getLogger(Algorithm.class);
 	private Random rand;
 	
+	protected final int TIMEOUT = 1000;
+	protected int stepCount = 0;
+	
 	// a set of nodes
 	protected Set<Node> nodeSet;
 	// a set of edges
@@ -69,7 +72,7 @@ public abstract class Algorithm {
 			node = iter.next();
 			count++;
 		}
-		
+		//log.debug(node.getName());
 		return node;
 	}
 	

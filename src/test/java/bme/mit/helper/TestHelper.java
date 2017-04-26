@@ -114,9 +114,50 @@ public class TestHelper {
 		return true;
 	}
 	
-	public boolean checkEdgePath() {
+	public boolean checkEdgePath(Graph graph, String path) {
 		
-		return false;
+		String[] elements = path.split(";");
+		
+		if (elements.length < 1) {
+			return false;
+		}
+		
+		Node node = getNodeByName(graph, elements[0]);
+		if (node == null) {
+			if (graph.getEdges().size() == 0) {
+				return true;
+			}
+			return false;
+		}
+		
+		for (int i = 1; i < elements.length; i++) {
+			List<Edge> possibleEdges = node.getEdges();
+			boolean foundEdge = false;
+			for (Edge edge : possibleEdges) {
+				if (elements[i].equals(edge.getInputLabel())) {
+					node = edge.getEndNode();
+					edge.setVisitedCount(edge.getVisitedCount() + 1);
+					foundEdge = true;
+					break;
+				}
+			}
+			if (!foundEdge) {
+				return false;
+			}
+		}
+		
+		Set<Edge> edges = graph.getEdges();
+		
+		
+		Iterator<Edge> iter = edges.iterator();
+		while (iter.hasNext()) {
+			Edge edge = iter.next();
+			if (edge.getVisitedCount() == 0) {
+				return false;
+			}
+		}
+			
+		return true;
 	}
 
 }

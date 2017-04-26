@@ -25,6 +25,7 @@ public class RandomAlgorithm extends Algorithm {
 		pathBuilder = new StringBuilder("");
 		
 		Node initNode = getRandomNode(graph);
+		stepCount = 0;
 		
 		traverseNodes(graph, initNode);
 		
@@ -36,6 +37,10 @@ public class RandomAlgorithm extends Algorithm {
 		pathBuilder = new StringBuilder("");
 		
 		Node initNode = getRandomNode(graph);
+		pathBuilder.append(initNode.getName());
+		pathBuilder.append(";");
+		
+		stepCount = 0;
 		
 		traverseEdges(graph, initNode);
 		
@@ -47,6 +52,7 @@ public class RandomAlgorithm extends Algorithm {
 		pathBuilder = new StringBuilder("");
 		
 		Node initial = getNodeByName(graph, init);
+		stepCount = 0;
 		traverseNodes(graph, initial);
 		
 		return pathBuilder.toString();
@@ -55,8 +61,11 @@ public class RandomAlgorithm extends Algorithm {
 	@Override
 	public String getAllEdgeVisitedFromGivenNode(Graph graph, String init) {
 		pathBuilder = new StringBuilder("");
+		pathBuilder.append(init);
+		pathBuilder.append(";");
 		
 		Node initial = getNodeByName(graph, init);
+		stepCount = 0;
 		traverseEdges(graph, initial);
 		
 		return pathBuilder.toString();
@@ -74,7 +83,11 @@ public class RandomAlgorithm extends Algorithm {
 		nodeSet.add(initial);
 		
 		Random rnd = new Random();
-		int index = rnd.nextInt(initial.getEdges().size());		
+		int outgoingEdgeCount = initial.getEdges().size();
+		if (outgoingEdgeCount == 0 || stepCount >= TIMEOUT) {
+			return;
+		}
+		int index = rnd.nextInt(outgoingEdgeCount);		
 		Edge edge = initial.getEdges().get(index);
 		
 		
@@ -83,6 +96,7 @@ public class RandomAlgorithm extends Algorithm {
 			super.reset(graph);
 		}
 		else {
+			stepCount++;
 			traverseNodes(graph, edge.getEndNode());
 		}		
 	}
@@ -93,7 +107,11 @@ public class RandomAlgorithm extends Algorithm {
 	public void traverseEdges(Graph graph, Node initial) {
 		
 		Random rnd = new Random();
-		int index = rnd.nextInt(initial.getEdges().size());
+		int outgoingEdgeCount = initial.getEdges().size();
+		if (outgoingEdgeCount == 0 || stepCount >= TIMEOUT) {
+			return;
+		}
+		int index = rnd.nextInt(outgoingEdgeCount);
 		
 		Edge edge = initial.getEdges().get(index);
 		edgeSet.add(edge);
@@ -106,6 +124,7 @@ public class RandomAlgorithm extends Algorithm {
 			super.reset(graph);
 		}
 		else {
+			stepCount++;
 			traverseEdges(graph, edge.getEndNode());
 		}		
 	}

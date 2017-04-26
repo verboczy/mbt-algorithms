@@ -36,14 +36,14 @@ public class AlgorithmParameterizedTest {
 	@Parameters(name = "{1}")
 	public static List<Object[]> data() {
 		return Arrays.asList(new Object[][] {			
-			//{"s1", "graphNotConnected.gv"},
-			//{"s1", "graphNotConnectedWithEdges.gv"},
-			//{"s1", "graphConnectedButCannotTraverse.gv"},
+			{"s1", "graphNotConnected.gv"},
+			{"s1", "graphNotConnectedWithEdges.gv"},
+			{"s1", "graphConnectedButCannotTraverse.gv"},
 			{"s1", "graphK3.gv"},
 			{"s1", "graphK4.gv"},
 			{"s1", "graphTriangleWithOneParallelEdge.gv"},
-			//{"s1", "graphWithSource.gv"},
-			//{"s1", "graphWithSink.gv"}
+			{"s1", "graphWithSource.gv"},
+			{"s1", "graphWithSink.gv"}
 		});
 	}
 	
@@ -79,24 +79,28 @@ public class AlgorithmParameterizedTest {
 	public void testMyTraverseEdgesFromGivenNode() {
 		String path = myAlgorithm.getAllEdgeVisitedFromGivenNode(graphLoader.loadGraph(fileName), initName);
 		log.info("Visit edges with myAlgorithm from a given node: " + path);
+		assertEquals(true, helper.checkEdgePath(graphLoader.loadGraph(fileName), path));
 	}
 	
 	@Test
 	public void testRandomTraverseEdgesFromGivenNode() {
 		String path = randomAlgorithm.getAllEdgeVisitedFromGivenNode(graphLoader.loadGraph(fileName), initName);
 		log.info("Visit edges with randomAlgorithm from a given node: " + path);
+		assertEquals(true, helper.checkEdgePath(graphLoader.loadGraph(fileName), path));
 	}
 	
 	@Test
 	public void testMyTraverseEdgesFromRandomNode() {
 		String path = myAlgorithm.getAllEdgeVisited(graphLoader.loadGraph(fileName));
 		log.info("Visit edges with myAlgorithm from a random node: " + path);
+		assertEquals(true, helper.checkEdgePath(graphLoader.loadGraph(fileName), path));
 	}
 	
 	@Test
 	public void testRandomTraverseEdgesFromRandomNode() {
 		String path = randomAlgorithm.getAllEdgeVisited(graphLoader.loadGraph(fileName));
 		log.info("Visit edges with randomAlgorithm from a random node: " + path);
+		assertEquals(true, helper.checkEdgePath(graphLoader.loadGraph(fileName), path));
 	}
 	
 	/*
