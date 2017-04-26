@@ -55,13 +55,7 @@ public class Parser {
 				} else {
 					nodes.add(stringArray[0]);
 					nodes.add(stringArray[2]);
-					try {
-						edges.add(stringArray[0] + " " + stringArray[2] + " " + stringArray[3] + " " + stringArray[4]);
-					} catch (IndexOutOfBoundsException e) {
-						log.error("could not add input or output to the edge: " + stringArray[0] + " " + stringArray[2],
-								e);
-						edges.add(stringArray[0] + " " + stringArray[2]);
-					}
+					loadIntoEdge(stringArray);
 				}
 			}
 
@@ -72,6 +66,16 @@ public class Parser {
 		makeEdgeList(graph);
 
 		return graph;
+	}
+	
+	private void loadIntoEdge(String[] stringArray) {
+		try {
+			edges.add(stringArray[0] + " " + stringArray[2] + " " + stringArray[3] + " " + stringArray[4]);
+		} catch (IndexOutOfBoundsException e) {
+			log.error("could not add input or output to the edge: " + stringArray[0] + " " + stringArray[2],
+					e);
+			edges.add(stringArray[0] + " " + stringArray[2]);
+		}
 	}
 
 	/**

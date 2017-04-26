@@ -2,9 +2,6 @@ package bme.mit.algorithms;
 
 import java.util.Random;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import bme.mit.graph.Edge;
 import bme.mit.graph.Graph;
 import bme.mit.graph.Node;
@@ -15,9 +12,7 @@ import bme.mit.graph.Node;
  *
  */
 public class RandomAlgorithm extends Algorithm {
-	
-	private Logger logger = LoggerFactory.getLogger(RandomAlgorithm.class);
-	
+		
 	private StringBuilder pathBuilder;
 	
 	@Override
@@ -76,7 +71,6 @@ public class RandomAlgorithm extends Algorithm {
 	 */
 	public void traverseNodes(Graph graph, Node initial) {
 		
-		//initial.printMyself();
 		pathBuilder.append(initial.getName());
 		pathBuilder.append(";");
 		initial.setVisitedCount(initial.getVisitedCount() + 1);
@@ -92,7 +86,6 @@ public class RandomAlgorithm extends Algorithm {
 		
 		
 		if (nodeSet.equals(graph.getNodes())) {
-			//logger.info("all nodes have been visited.");
 			super.reset(graph);
 		}
 		else {
@@ -115,12 +108,10 @@ public class RandomAlgorithm extends Algorithm {
 		
 		Edge edge = initial.getEdges().get(index);
 		edgeSet.add(edge);
-		//edge.printMyself();
 		pathBuilder.append(edge.getInputLabel());
 		pathBuilder.append(";");
 		
 		if (edgeSet.equals(graph.getEdges())) {
-			//logger.info("all edges have been visited. (randomAlgo)");
 			super.reset(graph);
 		}
 		else {

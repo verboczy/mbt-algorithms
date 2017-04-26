@@ -1,8 +1,5 @@
 package bme.mit.algorithms;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import bme.mit.graph.Edge;
 import bme.mit.graph.Graph;
 import bme.mit.graph.Node;
@@ -13,8 +10,6 @@ import bme.mit.graph.Node;
  *
  */
 public class MyAlgorithm extends Algorithm {
-		
-	private Logger logger = LoggerFactory.getLogger(MyAlgorithm.class);
 	
 	private StringBuilder pathBuilder;
 	
@@ -77,13 +72,12 @@ public class MyAlgorithm extends Algorithm {
 		if (stepCount >= TIMEOUT) {
 			return;
 		}
-		//node.printMyself();		
 		pathBuilder.append(node.getName());
 		pathBuilder.append(";");
 		node.setVisitedCount(node.getVisitedCount() + 1);
 		nodeSet.add(node);
 		
-		if (node.getEdges().size() == 0) {
+		if (node.getEdges().isEmpty()) {
 			return;
 		}
 		Edge activeEdge = node.getEdges().get(0);
@@ -91,12 +85,10 @@ public class MyAlgorithm extends Algorithm {
 		for (Edge edge : node.getEdges()) {
 			if (edge.getEndNode().getVisitedCount() < minVisited.getVisitedCount()) {
 				minVisited = edge.getEndNode();
-				//activeEdge = edge;	// not used
 			}
 		}
 		
 		if (nodeSet.equals(graph.getNodes())) {
-			//logger.info("all nodes have been visited.");
 			super.reset(graph);
 		}
 		else {
@@ -109,7 +101,7 @@ public class MyAlgorithm extends Algorithm {
 	 * Visits all edges from an initial node.
 	 */
 	public void traverseEdges(Graph graph, Node initial) {
-		if (initial.getEdges().size() == 0 || stepCount >= TIMEOUT) {
+		if (initial.getEdges().isEmpty() || stepCount >= TIMEOUT) {
 			return;
 		}
 		Edge minVisited = initial.getEdges().get(0);
@@ -121,12 +113,10 @@ public class MyAlgorithm extends Algorithm {
 		
 		minVisited.setVisitedCount(minVisited.getVisitedCount() + 1);
 		edgeSet.add(minVisited);
-		//minVisited.printMyself();
 		pathBuilder.append(minVisited.getInputLabel());
 		pathBuilder.append(";");
 		
 		if (edgeSet.equals(graph.getEdges())) {
-			//logger.info("all edges have been visited.");
 			super.reset(graph);
 		}
 		else {

@@ -159,5 +159,14 @@ public class TestHelper {
 			
 		return true;
 	}
+	
+	public boolean checkEulerCircle(Graph graphOriginal, Graph visited, String path) {
+				
+		if (!checkNodePath(graphOriginal, path)) {
+			return false;
+		}
+		
+		return (visited.getEdges().size() == 0); 
+	}
 
 }

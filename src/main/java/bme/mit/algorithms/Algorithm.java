@@ -26,9 +26,8 @@ import bme.mit.graph.Node;
 public abstract class Algorithm {
 	
 	private Logger log = LoggerFactory.getLogger(Algorithm.class);
-	private Random rand;
 	
-	protected final int TIMEOUT = 1000;
+	protected final static int TIMEOUT = 1000;
 	protected int stepCount = 0;
 	
 	// a set of nodes
@@ -54,12 +53,9 @@ public abstract class Algorithm {
 	public abstract String getAllEdgeVisited(Graph graph);
 	public abstract String getAllNodeVisitedFromGivenNode(Graph graph, String initial);
 	public abstract String getAllEdgeVisitedFromGivenNode(Graph graph, String initial);
-	
-	//public abstract void traverseNodes(Graph graph, Node initial);
-	//public abstract void traverseEdges(Graph graph, Node initial);
-	
+		
 	protected Node getRandomNode(Graph graph) {
-		rand = new Random();
+		Random rand = new Random();
 		
 		int graphSize = graph.getNodes().size();
 		int i = rand.nextInt(graphSize) + 1;
@@ -72,7 +68,7 @@ public abstract class Algorithm {
 			node = iter.next();
 			count++;
 		}
-		//log.debug(node.getName());
+		
 		return node;
 	}
 	
@@ -108,18 +104,27 @@ public abstract class Algorithm {
 	 * @param graph - the graph we want to visit
 	 * @param initNode - the node, the Euler circle starts from
 	 */
-	public String eulerCircle(Graph graph, Node initNode) {
+	public String eulerCircle(Graph graph, String initName) {
 		stack.clear();
 		circle.clear();
+		
+		Node initNode = getNodeByName(graph, initName);
+		
+		if (graph.getHasSink() || graph.getHasSource()) {
+			return "-";
+		}
+		
+		eulerizeGraph(graph);
 				
 		eul(graph, initNode);
-		
+				
 		reverseCircleList();		
 		circle.add(0, initNode);
 		
 		StringBuilder eulerCircle = new StringBuilder("");
 		for (Node node : circle) {
 			eulerCircle.append(node.getName());
+			eulerCircle.append(";");
 		}
 		return eulerCircle.toString();		
 	}
@@ -142,7 +147,7 @@ public abstract class Algorithm {
 		else {
 			stack.push(current);
 			Edge removeEdge = current.getEdges().get(0);
-			current.getEdges().remove(0);
+			current.getEdges().remove(0);			
 			Node newCurrent = removeEdge.getEndNode();
 			graph.getEdges().remove(removeEdge);
 			eul(graph, newCurrent);
@@ -169,7 +174,7 @@ public abstract class Algorithm {
 	 * all node's polarity to be 0.
 	 * @param original
 	 */
-	public void eulerizeGraph(Graph original) {
+	private void eulerizeGraph(Graph original) {
 		// If the graph has a sink or a source, than it cannot be eulerized.
 		if (original.getHasSink() || original.getHasSource()) {
 			log.debug("The graph cannot be eulerized.");
@@ -188,7 +193,7 @@ public abstract class Algorithm {
 		}
 		
 		if (positive == null) {
-			// End. There was not any node having greater polarity than 0, so cannot be any having less than 0. So all must be 0.
+			// End. There was not any node having greater polarity than 0, so cannot be any, having less than 0. So all must be 0.
 			return;
 		}
 		

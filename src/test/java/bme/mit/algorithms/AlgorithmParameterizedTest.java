@@ -12,9 +12,9 @@ import org.junit.runners.Parameterized.Parameters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import bme.mit.graph.Graph;
 import bme.mit.graph.GraphLoader;
 import bme.mit.helper.TestHelper;
-import bme.mit.sequences.SequenceParameterizedTest;
 
 @RunWith(Parameterized.class)
 public class AlgorithmParameterizedTest {
@@ -25,7 +25,7 @@ public class AlgorithmParameterizedTest {
 	private String initName;
 	private String fileName;
 	private TestHelper helper;
-	private Logger log = LoggerFactory.getLogger(SequenceParameterizedTest.class);
+	private Logger log = LoggerFactory.getLogger(AlgorithmParameterizedTest.class);
 	
 	public AlgorithmParameterizedTest(String init, String file) {
 		initName = init;
@@ -103,12 +103,16 @@ public class AlgorithmParameterizedTest {
 		assertEquals(true, helper.checkEdgePath(graphLoader.loadGraph(fileName), path));
 	}
 	
-	/*
+	
 	@Test
 	public void testEulerCircle() {
-		
+		Graph graph = graphLoader.loadGraph(fileName);
+		String path = myAlgorithm.eulerCircle(graph, initName);
+		log.info("Euler circle: " + path);
+		assertEquals(true, helper.checkEulerCircle(graphLoader.loadGraph(fileName), graph, path));
 	}	
 	
+	/*
 	@Test
 	public void testDeBruijnSequence() {
 		
