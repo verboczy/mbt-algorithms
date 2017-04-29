@@ -10,22 +10,23 @@ import bme.mit.graph.Graph;
 import bme.mit.graph.Node;
 
 public class TestHelper {
-	
+
 	/**
 	 * Checks if the given sequence is a homing sequence in the graph.
+	 * 
 	 * @param graph
 	 * @param homingSequence
 	 * @return
 	 */
 	public boolean checkHomingSequence(Graph graph, String homingSequence) {
-		
+
 		Set<Node> nodes = graph.getNodes();
-		
+
 		char[] sequence = homingSequence.toCharArray();
-		
+
 		List<Node> lastNodes = new ArrayList<>();
 		List<String> outputs = new ArrayList<>();
-		
+
 		int iter = 0;
 		for (Node node : nodes) {
 			Node lastNode = node;
@@ -40,41 +41,39 @@ public class TestHelper {
 			String output = outputString.toString();
 			outputs.add(output);
 			lastNodes.add(lastNode);
-			
+
 			for (int j = 0; j < iter; j++) {
 				// From the definition of homing sequence.
-				if(!lastNode.getName().equals(lastNodes.get(j).getName()) && output.equals(outputs.get(j))) {
+				if (!lastNode.getName().equals(lastNodes.get(j).getName()) && output.equals(outputs.get(j))) {
 					return false;
-				}				
+				}
 			}
-			
+
 			iter++;
 		}
-		
+
 		return true;
 	}
-	
+
 	private Node getNodeByName(Graph graph, String name) {
-		
+
 		Iterator<Node> iter = graph.getNodes().iterator();
 		Node node = null;
-		
+
 		while (iter.hasNext()) {
 			node = iter.next();
 			if (name.equals(node.getName())) {
 				return node;
 			}
 		}
-		
+
 		return node;
 	}
-	
-	// It is a valid path if all node is visited and all two consecutive nodes have an edge between themselves.
-	public boolean checkNodePath(Graph graph, String path) {
-		
+
+	private boolean checkEdgesBetweenNodes(Graph graph, String path) {
 		String[] elements = path.split(";");
 		List<Node> nodeList = new ArrayList<>();
-		
+
 		// making a list of nodes from the array of node names
 		for (int i = 0; i < elements.length; i++) {
 			nodeList.add(getNodeByName(graph, elements[i]));
@@ -86,8 +85,7 @@ public class TestHelper {
 			Node node = nodeList.get(i);
 			int vc = node.getVisitedCount();
 			node.setVisitedCount(++vc);
-			
-			
+
 			Node nextNode = nodeList.get(i + 1);
 			List<Edge> edges = node.getEdges();
 			int index = 0;
@@ -98,9 +96,30 @@ public class TestHelper {
 				return false;
 			}
 		}
+		
+		return true;
+	}
+
+	// It is a valid path if all node is visited and all two consecutive nodes
+	// have an edge between themselves.
+	public boolean checkNodePath(Graph graph, String path) {
+		
+		if (!checkEdgesBetweenNodes(graph, path)) {
+			return false;
+		}
+
+		String[] elements = path.split(";");
+		List<Node> nodeList = new ArrayList<>();
+
+		// making a list of nodes from the array of node names
+		for (int i = 0; i < elements.length; i++) {
+			nodeList.add(getNodeByName(graph, elements[i]));
+		}
+
+		int size = nodeList.size();
 		int vc = nodeList.get(size - 1).getVisitedCount();
 		nodeList.get(size - 1).setVisitedCount(++vc);
-		
+
 		// checking the visited count
 		Set<Node> nodeSet = graph.getNodes();
 		Iterator<Node> iter = nodeSet.iterator();
@@ -110,18 +129,18 @@ public class TestHelper {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
-	
+
 	public boolean checkEdgePath(Graph graph, String path) {
-		
+
 		String[] elements = path.split(";");
-		
+
 		if (elements.length < 1) {
 			return false;
 		}
-		
+
 		Node node = getNodeByName(graph, elements[0]);
 		if (node == null) {
 			if (graph.getEdges().size() == 0) {
@@ -129,7 +148,7 @@ public class TestHelper {
 			}
 			return false;
 		}
-		
+
 		for (int i = 1; i < elements.length; i++) {
 			List<Edge> possibleEdges = node.getEdges();
 			boolean foundEdge = false;
@@ -145,10 +164,9 @@ public class TestHelper {
 				return false;
 			}
 		}
-		
+
 		Set<Edge> edges = graph.getEdges();
-		
-		
+
 		Iterator<Edge> iter = edges.iterator();
 		while (iter.hasNext()) {
 			Edge edge = iter.next();
@@ -156,17 +174,18 @@ public class TestHelper {
 				return false;
 			}
 		}
-			
+
 		return true;
 	}
-	
+
 	public boolean checkEulerCircle(Graph graphOriginal, Graph visited, String path) {
-				
-		if (!checkNodePath(graphOriginal, path)) {
+
+		if (!checkEdgesBetweenNodes(graphOriginal, path)) {
+			System.out.println("nodes not alright");
 			return false;
 		}
-		
-		return (visited.getEdges().size() == 0); 
+
+		return (visited.getEdges().size() == 0);
 	}
 
 }

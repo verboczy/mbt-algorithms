@@ -86,6 +86,56 @@ public abstract class Algorithm {
 		
 		return node;
 	}
+	/*
+	protected void printNodeVC(Graph graph) {
+		Set<Node> nodes = graph.getNodes();
+		Iterator<Node> iter = nodes.iterator();
+		Node node = null;
+		System.out.println("------------------");
+		while (iter.hasNext()) {
+			node = iter.next();
+			System.out.println(node.getVisitedCount());
+		}
+		System.out.println("------------------");
+	}
+	
+	protected void printEdgeVC(Graph graph) {
+		Set<Edge> edges = graph.getEdges();
+		Iterator<Edge> iter = edges.iterator();
+		Edge edge = null;
+		System.out.println("------------------");
+		while (iter.hasNext()) {
+			edge = iter.next();
+			System.out.println(edge.getVisitedCount());
+		}
+		System.out.println("------------------");
+	}
+	*/
+	protected boolean checkAllNodeVisited(Graph graph) {
+		Set<Node> nodes = graph.getNodes();
+		Iterator<Node> iter = nodes.iterator();
+		Node node = null;
+		while (iter.hasNext()) {
+			node = iter.next();
+			if (node.getVisitedCount() == 0) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	protected boolean checkAllEdgeVisited(Graph graph) {
+		Set<Edge> edges = graph.getEdges();
+		Iterator<Edge> iter = edges.iterator();
+		Edge edge = null;
+		while (iter.hasNext()) {
+			edge = iter.next();
+			if (edge.getVisitedCount() == 0) {
+				return false;
+			}
+		}
+		return true;
+	}
 	
 	/**
 	 * Reverses the "circle" list.

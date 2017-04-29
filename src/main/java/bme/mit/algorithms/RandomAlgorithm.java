@@ -14,6 +14,7 @@ import bme.mit.graph.Node;
 public class RandomAlgorithm extends Algorithm {
 		
 	private StringBuilder pathBuilder;
+	private boolean cannotTraverse;
 	
 	@Override
 	public String getAllNodeVisited(Graph graph) {
@@ -23,6 +24,10 @@ public class RandomAlgorithm extends Algorithm {
 		stepCount = 0;
 		
 		traverseNodes(graph, initNode);
+		
+		if (cannotTraverse) {
+			return "-";
+		}
 		
 		return pathBuilder.toString();
 	}
@@ -39,6 +44,10 @@ public class RandomAlgorithm extends Algorithm {
 		
 		traverseEdges(graph, initNode);
 		
+		if (cannotTraverse) {
+			return "-";
+		}
+		
 		return pathBuilder.toString();
 	}
 
@@ -49,6 +58,10 @@ public class RandomAlgorithm extends Algorithm {
 		Node initial = getNodeByName(graph, init);
 		stepCount = 0;
 		traverseNodes(graph, initial);
+		
+		if (cannotTraverse) {
+			return "-";
+		}
 		
 		return pathBuilder.toString();
 	}
@@ -62,6 +75,10 @@ public class RandomAlgorithm extends Algorithm {
 		Node initial = getNodeByName(graph, init);
 		stepCount = 0;
 		traverseEdges(graph, initial);
+		
+		if (cannotTraverse) {
+			return "-";
+		}
 		
 		return pathBuilder.toString();
 	}
@@ -79,6 +96,8 @@ public class RandomAlgorithm extends Algorithm {
 		Random rnd = new Random();
 		int outgoingEdgeCount = initial.getEdges().size();
 		if (outgoingEdgeCount == 0 || stepCount >= TIMEOUT) {
+			cannotTraverse = (stepCount >= TIMEOUT);
+			cannotTraverse = !checkAllNodeVisited(graph);
 			return;
 		}
 		int index = rnd.nextInt(outgoingEdgeCount);		
@@ -102,6 +121,8 @@ public class RandomAlgorithm extends Algorithm {
 		Random rnd = new Random();
 		int outgoingEdgeCount = initial.getEdges().size();
 		if (outgoingEdgeCount == 0 || stepCount >= TIMEOUT) {
+			cannotTraverse = (stepCount >= TIMEOUT);
+			cannotTraverse = !checkAllEdgeVisited(graph);
 			return;
 		}
 		int index = rnd.nextInt(outgoingEdgeCount);

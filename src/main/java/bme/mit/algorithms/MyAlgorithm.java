@@ -12,6 +12,7 @@ import bme.mit.graph.Node;
 public class MyAlgorithm extends Algorithm {
 	
 	private StringBuilder pathBuilder;
+	private boolean cannotTraverse = false;
 	
 		
 	@Override
@@ -22,6 +23,10 @@ public class MyAlgorithm extends Algorithm {
 		stepCount = 0;
 		
 		traverseNodes(graph, initNode);
+		
+		if (cannotTraverse) {
+			return "-";
+		}
 		
 		return pathBuilder.toString();
 	}
@@ -38,6 +43,10 @@ public class MyAlgorithm extends Algorithm {
 		
 		traverseEdges(graph, initNode);
 		
+		if (cannotTraverse) {
+			return "-";
+		}
+		
 		return pathBuilder.toString();
 	}
 
@@ -48,6 +57,10 @@ public class MyAlgorithm extends Algorithm {
 		Node initial = getNodeByName(graph, init);
 		stepCount = 0;
 		traverseNodes(graph, initial);
+		
+		if (cannotTraverse) {
+			return "-";
+		}
 		
 		return pathBuilder.toString();
 	}
@@ -61,6 +74,9 @@ public class MyAlgorithm extends Algorithm {
 		Node initial = getNodeByName(graph, init);		
 		stepCount = 0;
 		traverseEdges(graph, initial);
+		if (cannotTraverse) {
+			return "-";
+		}
 		
 		return pathBuilder.toString();
 	}		
@@ -70,6 +86,7 @@ public class MyAlgorithm extends Algorithm {
 	 */
 	public void traverseNodes(Graph graph, Node node) {		
 		if (stepCount >= TIMEOUT) {
+			cannotTraverse = true;
 			return;
 		}
 		pathBuilder.append(node.getName());
@@ -78,6 +95,7 @@ public class MyAlgorithm extends Algorithm {
 		nodeSet.add(node);
 		
 		if (node.getEdges().isEmpty()) {
+			cannotTraverse = !checkAllNodeVisited(graph);
 			return;
 		}
 		Edge activeEdge = node.getEdges().get(0);
@@ -102,6 +120,8 @@ public class MyAlgorithm extends Algorithm {
 	 */
 	public void traverseEdges(Graph graph, Node initial) {
 		if (initial.getEdges().isEmpty() || stepCount >= TIMEOUT) {
+			cannotTraverse = (stepCount >= TIMEOUT);
+			cannotTraverse = !checkAllEdgeVisited(graph);
 			return;
 		}
 		Edge minVisited = initial.getEdges().get(0);
