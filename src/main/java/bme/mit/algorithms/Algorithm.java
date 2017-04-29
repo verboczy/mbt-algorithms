@@ -208,6 +208,7 @@ public abstract class Algorithm {
 	 * Sets the nodes and edges to unvisited.
 	 * @param graph
 	 */
+	/*
 	protected void reset(Graph graph) {
 		for (Node node : graph.getNodes()) {
 			node.setVisitedCount(0);
@@ -218,18 +219,13 @@ public abstract class Algorithm {
 		nodeSet.clear();
 		edgeSet.clear();
 	}
-	
+	*/
 	/**
 	 * Eulerizes the given graph. It means, it duplicates some edges to make 
 	 * all node's polarity to be 0.
 	 * @param original
 	 */
 	private void eulerizeGraph(Graph original) {
-		// If the graph has a sink or a source, than it cannot be eulerized.
-		if (original.getHasSink() || original.getHasSource()) {
-			log.debug("The graph cannot be eulerized.");
-			return;
-		}
 				
 		original.countPolarity();	// Recount the polarity of all node.
 		
@@ -261,9 +257,9 @@ public abstract class Algorithm {
 				// In case the two polarity equals, let's go the way where there are more possibilities.
 				((min.getPolarity() == edge.getEndNode().getPolarity()) 
 						&& (edge.getEndNode().getEdges().size() > min.getEdges().size()))) {				
-				min = edge.getEndNode();
-				duplicatedEdge.setEndNode(min);
-				duplicatedEdge.setInputLabel(edge.getInputLabel());
+//				min = edge.getEndNode();
+//				duplicatedEdge.setEndNode(min);
+//				duplicatedEdge.setInputLabel(edge.getInputLabel());
 			}
 		}
 		

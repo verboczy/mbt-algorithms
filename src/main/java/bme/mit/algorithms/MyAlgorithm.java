@@ -107,7 +107,7 @@ public class MyAlgorithm extends Algorithm {
 		}
 		
 		if (nodeSet.equals(graph.getNodes())) {
-			super.reset(graph);
+			//super.reset(graph);
 		}
 		else {
 			stepCount++;
@@ -137,7 +137,7 @@ public class MyAlgorithm extends Algorithm {
 		pathBuilder.append(";");
 		
 		if (edgeSet.equals(graph.getEdges())) {
-			super.reset(graph);
+			//super.reset(graph);
 		}
 		else {
 			stepCount++;

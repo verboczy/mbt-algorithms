@@ -42,7 +42,7 @@ public class SequenceParameterizedTest {
 			{"", "circleTwoEdgesWithLoops.gv"},
 			{"", "homingExample.gv"},
 			//{"", "pathOneEdge.gv"},
-			{"", "pathOneEdgeWithLoop.gv"},
+			//{"", "pathOneEdgeWithLoop.gv"},
 			{"", "singletonNode.gv"},
 			{"", "singletonNodeWithLoop.gv"}
 		});

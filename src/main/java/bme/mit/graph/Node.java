@@ -27,12 +27,6 @@ public class Node {
 	// the number of incoming edge - the number of outgoing edges
 	private int polarity;		
 	
-
-	public Node() {
-		visitedCount = 0;
-		edges = new ArrayList<>();
-		polarity = 0;
-	}
 	
 	public Node(String name) {
 		this.name = name;
@@ -59,18 +53,9 @@ public class Node {
 		return this;
 	}
 	
-	// Prints the name of the node to the log file.
-	public void printMyself() {
-		log.info("node: %s", name);
-	}
-	
 	// name
 	public String getName() {
 		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 	
 	// visitedCount	

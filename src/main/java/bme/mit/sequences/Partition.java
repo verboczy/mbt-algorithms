@@ -104,17 +104,5 @@ public class Partition {
 
 		return null;
 	}
-
-	public void printPartition() {
-		for (Block block : partitions) {
-			block.printMyself();
-		}
-	}
-
-	public void printBlocks() {
-		for (Block block : blocks) {
-			block.printMyself();
-		}
-	}
 	
 }

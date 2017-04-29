@@ -14,11 +14,7 @@ public class Block {
 	
 	private String blockName;
 	private Set<Node> states;
-	
-	public Block() {
-		this.states = new HashSet<>();
-	}
-	
+		
 	public Block(String name) {
 		this.blockName = name;
 		this.states = new HashSet<>();
@@ -31,14 +27,5 @@ public class Block {
 	public Set<Node> getStates() {
 		return states;
 	}
-	
-	public void printMyself() {
-		
-		
-		log.info("[BLOCK-INFO]: block ( %s ) contains the following states:", blockName);
-		for (Node node : states) {
-			log.info(node.getName());			
-		}
-		log.info("[BLOCK-INFO]: END");
-	}
+
 }

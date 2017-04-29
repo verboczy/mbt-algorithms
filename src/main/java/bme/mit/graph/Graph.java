@@ -103,16 +103,6 @@ public class Graph {
 		}
 	}
 	
-	// Prints the nodes and edges to the console.
-	public void printMyself() {
-		for (Node node : nodes) {
-			node.printMyself();
-		}
-		for (Edge edge : edges) {
-			edge.printMyself();
-		}		
-	}
-	
 	// sink
 	public boolean getHasSink() {
 		return hasSink;
