@@ -9,9 +9,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import bme.mit.graph.Edge;
 import bme.mit.graph.Graph;
 import bme.mit.graph.Node;
@@ -24,9 +21,7 @@ import bme.mit.graph.Node;
  *
  */
 public abstract class Algorithm {
-	
-	private Logger log = LoggerFactory.getLogger(Algorithm.class);
-	
+		
 	protected final static int TIMEOUT = 1000;
 	protected int stepCount = 0;
 	
@@ -114,7 +109,7 @@ public abstract class Algorithm {
 	protected boolean checkAllNodeVisited(Graph graph) {
 		Set<Node> nodes = graph.getNodes();
 		Iterator<Node> iter = nodes.iterator();
-		Node node = null;
+		Node node;
 		while (iter.hasNext()) {
 			node = iter.next();
 			if (node.getVisitedCount() == 0) {
@@ -127,7 +122,7 @@ public abstract class Algorithm {
 	protected boolean checkAllEdgeVisited(Graph graph) {
 		Set<Edge> edges = graph.getEdges();
 		Iterator<Edge> iter = edges.iterator();
-		Edge edge = null;
+		Edge edge;
 		while (iter.hasNext()) {
 			edge = iter.next();
 			if (edge.getVisitedCount() == 0) {

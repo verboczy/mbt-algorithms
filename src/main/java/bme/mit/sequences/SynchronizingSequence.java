@@ -184,7 +184,7 @@ public class SynchronizingSequence implements Sequence {
 		
 		Queue<HelperNode> queue = new LinkedList<>();
 		queue.add(root);
-		root.setVisited(true);
+		root.setVisited(true);		
 		while (!queue.isEmpty()) {
 			HelperNode node = queue.remove();	
 			
