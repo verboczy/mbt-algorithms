@@ -20,7 +20,10 @@ public class SynchronizingSequence implements Sequence {
 	private HelperGraph correspondingMachine = new HelperGraph();
 	private Set<String> inputs = new HashSet<>();
 
-	// TODO
+	/**
+	 * Makes a set of the input symbols of the graph.
+	 * @param graph
+	 */
 	private void setInputSet(Graph graph) {
 		Set<Edge> edges = graph.getEdges();
 		for (Edge edge : edges) {
@@ -28,10 +31,11 @@ public class SynchronizingSequence implements Sequence {
 		}
 	}
 
-	public void printMachine() {
-		correspondingMachine.print();
-	}
-
+	/**
+	 * Transforms the original graph to a new graph. 
+	 * We are able to find merging sequences on the new (transformed) graph.
+	 * @param original
+	 */
 	public void computeCorrespondingMachine(Graph original) {
 		setInputSet(original);
 		List<Node> nodes = toArrayList(original.getNodes());
@@ -39,41 +43,47 @@ public class SynchronizingSequence implements Sequence {
 		// Add nodes to the graph
 		for (int i = 0; i < nodes.size(); i++) {
 			HelperNode elem = new HelperNode();
-			elem.nodes.add(nodes.get(i));
-			correspondingMachine.nodes.add(elem);
+			elem.getNodes().add(nodes.get(i));
+			correspondingMachine.getNodes().add(elem);
 			for (int j = i + 1; j < nodes.size(); j++) {
 				HelperNode elems = new HelperNode();
-				elems.nodes.add(nodes.get(i));
-				elems.nodes.add(nodes.get(j));
-				correspondingMachine.nodes.add(elems);
+				elems.getNodes().add(nodes.get(i));
+				elems.getNodes().add(nodes.get(j));
+				correspondingMachine.getNodes().add(elems);
 			}
 		}
 
-		for (HelperNode node : correspondingMachine.nodes) {
+		// Add edges to the graph
+		for (HelperNode node : correspondingMachine.getNodes()) {
 			for (String input : inputs) {
 				HelperNode next = new HelperNode();
 				List<Node> nextNodes = new ArrayList<>();
-				for (Node simpleNode : node.nodes) {
+				for (Node simpleNode : node.getNodes()) {
 					if (!nextNodes.contains(simpleNode.getNextNode(input))) {
 						nextNodes.add(simpleNode.getNextNode(input));
 					}
 				}
-				next.nodes = nextNodes;
+				next.setNodes(nextNodes);
 				HelperEdge edge = new HelperEdge();
-				edge.input = input;
-				edge.startNode = node;
-				edge.endNode = getNodeByElements(nextNodes);
-				node.edges.add(edge);
-				correspondingMachine.edges.add(edge);
+				edge.setInput(input);
+				edge.setStartNode(node);
+				edge.setEndNode(getNodeByElements(nextNodes));
+				node.getEdges().add(edge);
+				correspondingMachine.getEdges().add(edge);
 			}
 		}
 	}
 
+	/**
+	 * Returns a helper node which contains the same nodes as the input list.
+	 * @param paramNode
+	 * @return
+	 */
 	private HelperNode getNodeByElements(List<Node> paramNode) {
-		for (HelperNode nodeList : correspondingMachine.nodes) {
-			if (nodeList.nodes.size() == paramNode.size() && nodeList.nodes.contains(paramNode.get(0))) {
+		for (HelperNode nodeList : correspondingMachine.getNodes()) {
+			if (nodeList.getNodes().size() == paramNode.size() && nodeList.getNodes().contains(paramNode.get(0))) {
 				if (paramNode.size() == 2) {
-					if (nodeList.nodes.contains(paramNode.get(1))) {
+					if (nodeList.getNodes().contains(paramNode.get(1))) {
 						return nodeList;
 					}
 				} else {
@@ -85,31 +95,37 @@ public class SynchronizingSequence implements Sequence {
 		return null;
 	}
 
+	/**
+	 * Given a list of nodes and a sequence, it tells which nodes we will be in after applying the sequence to 
+	 * the machine.
+	 * @param inputStates
+	 * @param seq
+	 * @return
+	 */
 	private List<Node> delta(List<Node> inputStates, String seq) {
-		System.out.println("delta: " + seq);
-
+		
 		List<Node> result = new ArrayList<>();
 
 		String[] seqElems = seq.split(";");
 
 		for (Node state : inputStates) {
-			System.out.println("rootstate: " + state.getName());
 			Node temp = state;
 			for (int i = 1; i < seqElems.length; i++) {
-				System.out.println("temp1: " + temp.getName());
 				temp = temp.getNextNode(seqElems[i]);
-				System.out.println("temp2: " + temp.getName());
 			}
 			if (!result.contains(temp)) {
-				result.add(temp);
-				//System.out.println(temp.getName());
-				
+				result.add(temp);				
 			}
 		}
 
 		return result;
 	}
 
+	/**
+	 * Converts a list to set.
+	 * @param set
+	 * @return
+	 */
 	private <T> List<T> toArrayList(Set<T> set) {
 
 		List<T> result = new ArrayList<>();
@@ -122,6 +138,9 @@ public class SynchronizingSequence implements Sequence {
 		return result;
 	}
 
+	/**
+	 * Synchronizing sequence.
+	 */
 	@Override
 	public String getSequence(Graph graph) {
 
@@ -137,7 +156,6 @@ public class SynchronizingSequence implements Sequence {
 			Node t = finalStates.get(1);
 
 			String y = mergingSequence(s, t);
-			//System.out.println(y);
 
 			if ("-".equals(y)) {
 				return y; // Failure
@@ -150,33 +168,35 @@ public class SynchronizingSequence implements Sequence {
 		return x.toString();
 	}
 
-	// BFS in the corresponding machine
+	/**
+	 * Finds a merging sequence between two nodes. It is a BFS algorithm.
+	 * @param s
+	 * @param t
+	 * @return
+	 */
 	private String mergingSequence(Node s, Node t) {
 		clearGraph();
 		
 		List<Node> rList = new ArrayList<>();
 		rList.add(s);
 		rList.add(t);
-		HelperNode root = getNodeByElements(rList);
-		//System.out.println("root: ");
-		root.print();
+		HelperNode root = getNodeByElements(rList);		
 		
 		Queue<HelperNode> queue = new LinkedList<>();
 		queue.add(root);
-		root.visited = true;
+		root.setVisited(true);
 		while (!queue.isEmpty()) {
 			HelperNode node = queue.remove();	
-			node.print();
+			
 			List<HelperNode> unvisitedChildren = getUnvisitedChildren(node);
 			for (HelperNode unvisited : unvisitedChildren) {
 				String in = getInput(node, unvisited);
-				unvisited.builder.append(node.builder.toString()).append(";").append(in);
-				//System.out.println("unvisited seq: " + unvisited.builder.toString());
+				unvisited.getBuilder().append(node.getBuilder().toString()).append(";").append(in);
 				if (isSingleton(unvisited)) {
-					return unvisited.builder.toString();
+					return unvisited.getBuilder().toString();
 				}
 				
-				unvisited.visited = true;
+				unvisited.setVisited(true);
 				queue.add(unvisited);
 			}
 		}
@@ -184,31 +204,50 @@ public class SynchronizingSequence implements Sequence {
 		return "-";
 	}
 	
+	/**
+	 * Sets the helper node to initial state.
+	 */
 	private void clearGraph() {
-		for (HelperNode node : correspondingMachine.nodes) {
-			node.builder = new StringBuilder("");
-			node.visited = false;
+		for (HelperNode node : correspondingMachine.getNodes()) {
+			node.setBuilder(new StringBuilder(""));
+			node.setVisited(false);
 		}
 	}
 	
+	/**
+	 * Given two nodes, it gives back the input label of the edge between them.
+	 * @param from - starting point of the edge
+	 * @param to - ending point of the edge
+	 * @return - the input label of the edge 
+	 */
 	private String getInput(HelperNode from, HelperNode to) {
-		for (HelperEdge edge : from.edges) {
-			if (edge.endNode.equals(to)) {
-				return edge.input;
+		for (HelperEdge edge : from.getEdges()) {
+			if (edge.getEndNode().equals(to)) {
+				return edge.getInput();
 			}
 		}
 		return "";
 	}
 	
+	/**
+	 * Returns if the helper node contains only one item.
+	 * @param node
+	 * @return
+	 */
 	private boolean isSingleton(HelperNode node) {
-		return node.nodes.size() == 1;
+		return node.getNodes().size() == 1;
 	}
 	
+	/**
+	 * Returns the unvisited children of a given node. 
+	 * @param node
+	 * @return
+	 */
 	private List<HelperNode> getUnvisitedChildren(HelperNode node) {
 		List<HelperNode> unvisited = new ArrayList<>();
-		for (HelperEdge edge : node.edges) {
-			if (!edge.endNode.visited) {
-				unvisited.add(edge.endNode);
+		for (HelperEdge edge : node.getEdges()) {
+			if (!edge.getEndNode().isVisited()) {
+				unvisited.add(edge.getEndNode());
 			}
 		}
 		return unvisited;

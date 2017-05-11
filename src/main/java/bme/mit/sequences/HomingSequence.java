@@ -8,6 +8,9 @@ public class HomingSequence implements Sequence {
 
 	private int boundary;
 
+	/**
+	 * Homing sequence.
+	 */
 	@Override
 	public String getSequence(Graph graph) {
 

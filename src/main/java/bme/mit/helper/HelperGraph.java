@@ -2,26 +2,28 @@ package bme.mit.helper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
-import bme.mit.graph.Node;
 
 public class HelperGraph {
 
-	public List<HelperNode> nodes = new ArrayList<>();
-	public List<HelperEdge> edges = new ArrayList<>();
+	private List<HelperNode> nodes = new ArrayList<>();
+	private List<HelperEdge> edges = new ArrayList<>();
 	
-	public void print() {
-		for (HelperNode helperNode : nodes) {
-			helperNode.print();
-		}
-		
-		System.out.println(edges.size());
-		
-		for (HelperEdge helperEdge : edges) {
-			helperEdge.print();
-		}
-		
+	
+	public List<HelperNode> getNodes() {
+		return nodes;
+	}
+	
+	public void setNodes(List<HelperNode> nodes) {
+		this.nodes = nodes;
+	}
+	
+	
+	public List<HelperEdge> getEdges() {
+		return edges;
+	}
+	
+	public void setEdges(List<HelperEdge> edges) {
+		this.edges = edges;
 	}
 	
 }

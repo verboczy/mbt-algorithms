@@ -1,6 +1,10 @@
-s1 -> s2 a 0
-s1 -> s2 b 0
-s2 -> s1 a 0
-s2 -> s3 b 0
-s3 -> s1 a 0
-s3 -> s2 b 0
+flogsta -> ekeby a 0
+flogsta -> eriksberg b 0
+ekeby -> kabo a 0
+ekeby -> flogsta b 0
+kabo -> eriksberg a 0
+kabo -> ekeby b 0
+eriksberg -> haga a 0
+eriksberg -> kabo b 0
+haga -> flogsta a 0
+haga -> eriksberg b 0

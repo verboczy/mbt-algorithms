@@ -10,6 +10,33 @@ import bme.mit.graph.Graph;
 import bme.mit.graph.Node;
 
 public class TestHelper {
+	
+	public boolean checkSynchronizinhSequence(Graph graph, String syncSeq) {
+		String[] seq = syncSeq.split(";");
+		
+		Node endNode1 = null;
+		Node endNode2 = null;
+		
+		for (Node node : graph.getNodes()) {
+			Node tempNode = node;
+			for (int i = 0; i < seq.length; i++) {
+				tempNode = tempNode.getNextNode(seq[i]);
+			}
+			
+			if (endNode1 == null) {
+				endNode1 = tempNode;
+			}
+			
+			endNode2 = tempNode;
+			
+			if (!endNode1.equals(endNode2)) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
 
 	/**
 	 * Checks if the given sequence is a homing sequence in the graph.

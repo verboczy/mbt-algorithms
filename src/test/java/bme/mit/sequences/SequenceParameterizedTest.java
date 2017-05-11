@@ -35,29 +35,35 @@ public class SequenceParameterizedTest {
 	@Parameters(name = "{1}")
 	public static List<Object[]> data() {
 		return Arrays.asList(new Object[][] {
-			{"", "circleFourEdges.gv"},
-			{"", "circleFourEdgesWithLoopsWithSameInput.gv"},
-			{"", "circleFourEdgesWithLoopsWithDiffInput.gv"},
-			{"", "circleTwoEdges.gv"},
-			{"", "circleTwoEdgesWithLoops.gv"},
-			{"", "homingExample.gv"},
-			//{"", "pathOneEdge.gv"},
-			//{"", "pathOneEdgeWithLoop.gv"},
+			{"-", "circleFourEdges.gv"},
+			{"-", "circleFourEdgesWithLoopsWithSameInput.gv"},
+			{"-", "circleFourEdgesWithLoopsWithDiffInput.gv"},
+			{"-", "circleTwoEdges.gv"},
+			{"-", "circleTwoEdgesWithLoops.gv"},
+			{"-", "homingExample.gv"},
 			{"", "singletonNode.gv"},
-			{"", "singletonNodeWithLoop.gv"}
+			{"", "singletonNodeWithLoop.gv"},
+			{"", "syncTriangleWithParallelEdge.gv"}
 		});
 	}
 		
 	@Test
 	public void testHoming() {
 		String seq = homingSequence.getSequence(graphLoader.loadGraph(fileName));
-		log.info(seq);
+		log.info("homing: " + seq);
 		Assert.assertEquals(true, helper.checkHomingSequence(graphLoader.loadGraph(fileName), seq));
 	}
 	
 	@Test
 	public void testSynchronizing() {
-		Assert.assertEquals(syncExpected, syncSequence.getSequence(graphLoader.loadGraph(fileName)));
+		String seq = syncSequence.getSequence(graphLoader.loadGraph(fileName));
+		log.info("synchronizing: " + seq);
+		if (syncExpected.equals(seq)) {
+			Assert.assertEquals(true, true);
+		}
+		else {
+			Assert.assertEquals(true, helper.checkSynchronizinhSequence(graphLoader.loadGraph(fileName), seq));
+		}
 	}
 	
 }
